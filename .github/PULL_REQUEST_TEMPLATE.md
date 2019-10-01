@@ -2,7 +2,14 @@
 
 Please include a summary of the change and which issue is fixed. Please also include relevant motivation and context. List any dependencies that are required for this change.
 
-Starts|Fixes|Finishes|Delivers #(Issue ID)
+# Issue ID/Link
+
+Choose one below and replace with the relevant Issue ID or Link
+
+- [ ] Starts #(Issue ID)
+- [ ] Fixes #(Issue ID)
+- [ ] Finishes #(Issue ID)
+- [ ] Delivers #(Issue ID)
 
 # Type of Implementation
 
