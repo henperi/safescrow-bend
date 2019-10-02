@@ -1,7 +1,0 @@
-{
-  "presets": ["env"],
-  "plugins": ["babel-plugin-transform-runtime"],
-  "parserOpts": {
-    "plugins": ["objectRestSpread"]
-  }
-}

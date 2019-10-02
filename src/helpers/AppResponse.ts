@@ -1,20 +1,23 @@
-/* eslint-disable require-jsdoc */
+import * as express from 'express';
 
+/**
+ * App
+ */
 class AppResponse {
   /**
    * @description Success Method
-   * @param {*} res
-   * @param {Object} [Response] - The success response object.
+   * @param {express.Response} res Response
+   * @param {express.Response} [Response] - The success response object.
    * @param {string=} Response.message - The message.
    * @param {number=} Response.statusCode - The status code.
    * @param {Object<string, any> | Array} [Response.data] - The data.
    *
    * @returns {*} Return
    */
-  static success(
-    res,
+  public static success(
+    res: express.Response,
     { message = 'Request Successful', statusCode = 200, data = {} } = {},
-  ) {
+  ): void {
     res.status(statusCode).json({
       success: true,
       statusCode,
@@ -25,7 +28,7 @@ class AppResponse {
 
   /**
    * @description Create Method
-   * @param {*} res
+   * @param {*} res Response
    * @param {Object} [Response] - The success response object.
    * @param {string=} Response.message - The message.
    * @param {number=} Response.statusCode - The status code.
@@ -33,10 +36,10 @@ class AppResponse {
    *
    * @returns {*} Returns
    */
-  static created(
-    res,
+  public static created(
+    res: express.Response,
     { message = 'Created Successfully', statusCode = 201, data = {} } = {},
-  ) {
+  ): void {
     res.status(statusCode).json({
       success: true,
       statusCode,
@@ -55,10 +58,10 @@ class AppResponse {
    *
    * @returns {*} Return
    */
-  static badRequest(
-    res,
+  public static badRequest(
+    res: express.Response,
     { message = 'Bad Request', statusCode = 400, errors = {} } = {},
-  ) {
+  ): void {
     res.status(statusCode).json({
       success: false,
       statusCode,
@@ -77,14 +80,10 @@ class AppResponse {
    *
    * @returns {*} Return
    */
-  static unAuthorized(
-    res,
-    {
-      message = 'unAuthorized Request',
-      statusCode = 401,
-      errors = {},
-    } = {},
-  ) {
+  public static unAuthorized(
+    res: express.Response,
+    { message = 'unAuthorized Request', statusCode = 401, errors = {} } = {},
+  ): void {
     res.status(statusCode).json({
       success: false,
       statusCode,
@@ -103,10 +102,10 @@ class AppResponse {
    *
    * @returns {*} Return
    */
-  static notFound(
-    res,
+  public static notFound(
+    res: express.Response,
     { message = 'Resource not found', statusCode = 404, errors = {} } = {},
-  ) {
+  ): void {
     res.status(statusCode).json({
       success: false,
       statusCode,
@@ -125,10 +124,10 @@ class AppResponse {
    *
    * @returns {*} Return
    */
-  static forbidden(
-    res,
+  public static forbidden(
+    res: express.Response,
     { message = 'Request Forbidden', statusCode = 403, errors = {} } = {},
-  ) {
+  ): void {
     res.status(statusCode).json({
       success: false,
       statusCode,
@@ -147,14 +146,10 @@ class AppResponse {
    *
    * @returns {*} Return
    */
-  static conflict(
-    res,
-    {
-      message = 'Conflicting Request',
-      statusCode = 409,
-      errors = {},
-    } = {},
-  ) {
+  public static conflict(
+    res: express.Response,
+    { message = 'Conflicting Request', statusCode = 409, errors = {} } = {},
+  ): void {
     res.status(statusCode).json({
       success: false,
       statusCode,
@@ -173,21 +168,19 @@ class AppResponse {
    *
    * @returns {*} Return
    */
-  static serverError(
-    res,
-    {
-      message = 'An internal error occured',
-      statusCode = 500,
-      errors = {},
-    } = {},
-  ) {
-    const getErrors = () => {
+  public static serverError(
+    res: express.Response,
+    { message = 'An internal error occured', statusCode = 500, errors = {} } = {},
+  ): void {
+    const getErrors = (): string => {
       if (process.env.NODE_ENV === 'production') {
         return 'This error might be from us, send us a message at info@advertiseit.com if this continues';
       }
       console.log(errors);
+
       return errors.toString();
     };
+
     res.status(statusCode).json({
       success: false,
       statusCode,
@@ -197,13 +190,4 @@ class AppResponse {
   }
 }
 
-const setAppResponse = (req, res, next) => {
-  /**
-   * @type {AppResponse}
-   */
-  res.locals.AppResponse = AppResponse;
-
-  return next();
-};
-
-export { AppResponse, setAppResponse };
+export { AppResponse };
