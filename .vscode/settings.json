@@ -1,11 +1,26 @@
 {
   "terminal.integrated.fontFamily": "Hack Nerd Font",
   "terminal.integrated.shell.osx": "/bin/zsh",
-  "editor.tabSize": 2,
-  "files.eol": "\n",
-  "javascript.format.enable": false,
+
   "editor.formatOnSave": true,
-  "prettier.trailingComma": "all",
-  "prettier.eslintIntegration": true,
-  "javascript.implicitProjectConfig.checkJs": true
+  "[javascript]": {
+    "editor.formatOnSave": false
+  },
+  "[javascriptreact]": {
+    "editor.formatOnSave": false
+  },
+  "[typescript]": {
+    "editor.formatOnSave": false
+  },
+  "[typescriptreact]": {
+    "editor.formatOnSave": false
+  },
+
+  "eslint.autoFixOnSave": true,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    { "language": "typescript", "autoFix": true },
+    { "language": "typescriptreact", "autoFix": true }
+  ]
 }
