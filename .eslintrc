@@ -44,9 +44,11 @@
       "error",
       {
         "requireReturn": true,
-        "requireReturnType": true,
+        "requireReturnType": false,
+        "requireParamType": false,
         "requireReturnDescription": true,
-        "requireParamDescription": true
+        "requireParamDescription": true,
+        "matchDescription": ".+"
       }
     ],
     "no-multiple-empty-lines": "error"

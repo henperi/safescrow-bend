@@ -7,11 +7,11 @@
     "test": "nyc --reporter=html --reporter=text mocha --require ts-node/register tests/**/*.spec.ts",
     "coverage": "nyc -r lcov -e .ts -x \"*.spec.ts\" npm run test",
     "build": "rm -rf ./build/ && tsc",
-    "migrate": "sequelize db:migrate",
-    "migrate:drop": "sequelize db:migrate:undo:all",
-    "migrate:reset": "sequelize db:migrate:undo:all && npm run migrate",
+    "migrate:reset": "npm run build && node build/db/migrate/reset",
+    "migrate:drop": "npm run build && node build/db/migrate/drop",
+    "migrate": "npm run build && node build/db/migrate",
     "start:dev": "nodemon --config \"./util/nodemon.json\"/",
-    "start": "node build"
+    "start": "npm run build && node build"
   },
   "repository": {
     "type": "git",
@@ -32,6 +32,9 @@
     "@types/node": "^12.7.9",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
+    "@types/dotenv": "^6.1.1",
+    "@typescript-eslint/eslint-plugin": "^2.3.2",
+    "@typescript-eslint/parser": "^2.3.2",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-airbnb-base": "^13.1.0",
@@ -51,15 +54,12 @@
   },
   "dependencies": {
     "@types/sequelize": "^4.28.5",
-    "@typescript-eslint/eslint-plugin": "^2.3.2",
-    "@typescript-eslint/parser": "^2.3.2",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^8.1.0",
     "express": "^4.16.4",
     "morgan": "^1.9.1",
     "pg": "^7.12.1",
-    "sequelize": "^5.19.1",
-    "sequelize-cli": "^5.5.1"
+    "sequelize": "^5.19.1"
   }
 }
