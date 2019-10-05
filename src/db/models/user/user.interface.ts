@@ -5,14 +5,15 @@ import * as SequelizeTypes from '@types/sequelize';
 
 export interface UserAttributes {
   id?: number;
+  uniqueId?: string;
   firstName: string;
   middleName: string;
   lastName: string;
   phone: string;
   email: string;
   password: string;
-  secretKey: string;
-  accountType: string;
+  accountType?: string;
+  secretKey?: string;
   createdAt?: Date;
   updatedAt?: Date;
 }

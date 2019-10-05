@@ -3,6 +3,7 @@
 // eslint-disable-next-line
 import * as SequelizeTypes from '@types/sequelize';
 
+import generateUniqueId from '../../../helpers/generateUniqueId';
 import { UserAttributes, UserInstance } from './user.interface';
 
 export const userFactory = (
@@ -10,6 +11,10 @@ export const userFactory = (
   DataTypes: SequelizeTypes.DataTypes,
 ): SequelizeTypes.Model<UserInstance, UserAttributes> => {
   const attributes: SequelizeTypes.DefineModelAttributes<UserAttributes> = {
+    uniqueId: {
+      type: DataTypes.STRING,
+      defaultValue: generateUniqueId(),
+    },
     firstName: {
       type: DataTypes.STRING,
     },
@@ -33,6 +38,7 @@ export const userFactory = (
     },
     accountType: {
       type: DataTypes.STRING,
+      defaultValue: 'Customer',
     },
   };
 
