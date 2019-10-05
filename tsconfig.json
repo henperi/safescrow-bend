@@ -10,9 +10,8 @@
     "emitDecoratorMetadata": true,
     "moduleResolution": "node",
     "importHelpers": true,
-    "types": ["node"],
+    "types": ["node", "mocha"],
     "typeRoots": ["node_modules/@types"],
-
 
     "forceConsistentCasingInFileNames": true,
     "noUnusedLocals": true,
