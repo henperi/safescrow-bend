@@ -5,7 +5,7 @@ const app = express();
 const port = process.env.PORT || 8025;
 
 /**
- * @description Method to start the app
+ * Method to start the app
  * @returns {void} void
  */
 const startServer = (): void => {

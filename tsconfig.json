@@ -15,8 +15,10 @@
 
     "forceConsistentCasingInFileNames": true,
     "noUnusedLocals": true,
-    "noImplicitReturns": true
+    "noImplicitReturns": true,
+
+    "allowJs": true
   },
-  "include": ["./src/**/*.ts"],
+  "include": ["./src/**/*.ts", "./src/**/*.js", "src/db/models/index.ts"],
   "exclude": ["./src/public/"]
 }

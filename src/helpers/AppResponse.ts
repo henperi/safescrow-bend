@@ -1,22 +1,25 @@
 import * as express from 'express';
 
+// Interfaces
+import { SuccessData, ErrorsData } from '../interfaces/AppResponse.interface';
+
 /**
- * App
+ * AppResponse
  */
 class AppResponse {
   /**
-   * @description Success Method
-   * @param {express.Response} res Response
-   * @param {express.Response} [Response] - The success response object.
-   * @param {string=} Response.message - The message.
-   * @param {number=} Response.statusCode - The status code.
-   * @param {Object<string, any> | Array} [Response.data] - The data.
+   * Success Method
+   * @param res Response
    *
-   * @returns {*} Return
+   * @returns Returns the API Response
    */
   public static success(
     res: express.Response,
-    { message = 'Request Successful', statusCode = 200, data = {} } = {},
+    {
+      message = 'Request Successful',
+      statusCode = 200,
+      data = {},
+    }: SuccessData = {} as SuccessData,
   ): void {
     res.status(statusCode).json({
       success: true,
@@ -27,18 +30,18 @@ class AppResponse {
   }
 
   /**
-   * @description Create Method
-   * @param {*} res Response
-   * @param {Object} [Response] - The success response object.
-   * @param {string=} Response.message - The message.
-   * @param {number=} Response.statusCode - The status code.
-   * @param {Object<string, any> | Array} [Response.data] - The data.
+   * Create Method
+   * @param res Response
    *
-   * @returns {*} Returns
+   * @returns Returns the API Response
    */
   public static created(
     res: express.Response,
-    { message = 'Created Successfully', statusCode = 201, data = {} } = {},
+    {
+      message = 'Created Successfully',
+      statusCode = 201,
+      data = {},
+    }: SuccessData = {} as SuccessData,
   ): void {
     res.status(statusCode).json({
       success: true,
@@ -49,18 +52,14 @@ class AppResponse {
   }
 
   /**
-   * @description NotFound Method
-   * @param {*} res
-   * @param {Object} [Response] - The success response object.
-   * @param {string=} Response.message - The message.
-   * @param {number=} Response.statusCode - The status code.
-   * @param {Object<string, any> | Array} [Response.errors] - The data.
+   * NotFound Method
+   * @param res Response
    *
-   * @returns {*} Return
+   * @returns Returns the API Response
    */
   public static badRequest(
     res: express.Response,
-    { message = 'Bad Request', statusCode = 400, errors = {} } = {},
+    { message = 'Bad Request', statusCode = 400, errors = {} }: ErrorsData = {} as ErrorsData,
   ): void {
     res.status(statusCode).json({
       success: false,
@@ -71,18 +70,18 @@ class AppResponse {
   }
 
   /**
-   * @description unAuthorized Method
-   * @param {*} res
-   * @param {Object} [Response] - The success response object.
-   * @param {string=} Response.message - The message.
-   * @param {number=} Response.statusCode - The status code.
-   * @param {Object<string, any> | Array} [Response.errors] - The data.
+   * unAuthorized Method
+   * @param res Res
    *
-   * @returns {*} Return
+   * @returns Returns the API Response
    */
   public static unAuthorized(
     res: express.Response,
-    { message = 'unAuthorized Request', statusCode = 401, errors = {} } = {},
+    {
+      message = 'Unauthorized Request',
+      statusCode = 401,
+      errors = {},
+    }: ErrorsData = {} as ErrorsData,
   ): void {
     res.status(statusCode).json({
       success: false,
@@ -93,18 +92,18 @@ class AppResponse {
   }
 
   /**
-   * @description NotFound Method
-   * @param {*} res
-   * @param {Object} [Response] - The success response object.
-   * @param {string=} Response.message - The message.
-   * @param {number=} Response.statusCode - The status code.
-   * @param {Object<string, any> | Array} [Response.errors] - The data.
+   * NotFound Method
+   * @param res Res
    *
-   * @returns {*} Return
+   * @returns Returns the API Response
    */
   public static notFound(
     res: express.Response,
-    { message = 'Resource not found', statusCode = 404, errors = {} } = {},
+    {
+      message = 'Resource not found',
+      statusCode = 404,
+      errors = {},
+    }: ErrorsData = {} as ErrorsData,
   ): void {
     res.status(statusCode).json({
       success: false,
@@ -115,18 +114,14 @@ class AppResponse {
   }
 
   /**
-   * @description NotFound Method
-   * @param {*} res
-   * @param {Object} [Response] - The success response object.
-   * @param {string=} Response.message - The message.
-   * @param {number=} Response.statusCode - The status code.
-   * @param {Object<string, any> | Array} [Response.errors] - The data.
+   * NotFound Method
+   * @param res Res
    *
-   * @returns {*} Return
+   * @returns Returns the API Response
    */
   public static forbidden(
     res: express.Response,
-    { message = 'Request Forbidden', statusCode = 403, errors = {} } = {},
+    { message = 'Request Forbidden', statusCode = 403, errors = {} }: ErrorsData = {} as ErrorsData,
   ): void {
     res.status(statusCode).json({
       success: false,
@@ -137,18 +132,18 @@ class AppResponse {
   }
 
   /**
-   * @description NotFound Method
-   * @param {*} res
-   * @param {Object} [Response] - The success response object.
-   * @param {string=} Response.message - The message.
-   * @param {number=} Response.statusCode - The status code.
-   * @param {Object<string, any> | Array} [Response.errors] - The data.
+   * NotFound Method
+   * @param res Res
    *
-   * @returns {*} Return
+   * @returns Returns the API Response
    */
   public static conflict(
     res: express.Response,
-    { message = 'Conflicting Request', statusCode = 409, errors = {} } = {},
+    {
+      message = 'Conflicting Request',
+      statusCode = 409,
+      errors = {},
+    }: ErrorsData = {} as ErrorsData,
   ): void {
     res.status(statusCode).json({
       success: false,
@@ -159,18 +154,18 @@ class AppResponse {
   }
 
   /**
-   * @description NotFound Method
-   * @param {*} res
-   * @param {Object} [Response] - The success response object.
-   * @param {string=} Response.message - The message.
-   * @param {number=} Response.statusCode - The status code.
-   * @param {Object<string, any> | Array} [Response.errors] - The data.
+   * NotFound Method
+   * @param res Res
    *
-   * @returns {*} Return
+   * @returns Returns the API Response
    */
   public static serverError(
     res: express.Response,
-    { message = 'An internal error occured', statusCode = 500, errors = {} } = {},
+    {
+      message = 'An internal error occured',
+      statusCode = 500,
+      errors = {},
+    }: ErrorsData = {} as ErrorsData,
   ): void {
     const getErrors = (): string => {
       if (process.env.NODE_ENV === 'production') {
