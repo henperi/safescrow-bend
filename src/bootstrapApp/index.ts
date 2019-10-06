@@ -21,7 +21,7 @@ const bootstrapApp = (app: Application): Application => {
   app.use('/api/v1', appRoutes);
 
   app.use('/*', (req: Request, res: Response) =>
-    AppResponse.notFound(res, { message: 'This endpoint does not exist endpoint does not exist' }),
+    AppResponse.notFound(res, { message: 'This endpoint does not exist' }),
   );
 
   return app;

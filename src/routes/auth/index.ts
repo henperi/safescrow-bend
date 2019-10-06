@@ -11,6 +11,6 @@ const authRouter = express.Router();
 /**
  * Signup user
  */
-authRouter.post('/', validateCreateUser, AuthController.createUser);
+authRouter.post('/signup', validateCreateUser, AuthController.createUser);
 
 export default authRouter;

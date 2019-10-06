@@ -5,6 +5,10 @@ jobs: # a collection of steps
     docker: # run the steps with Docker
       - image: circleci/node:10.13.0 # ...with this image as the primary container; this is where all `steps` will run
       - image: mongo:4.2.0 # and this image as the secondary service container
+      - image: circleci/postgres:9.6-alpine # Postgres
+        environment:
+          POSTGRES_USER: safescrow_user
+          POSTGRES_DB: safescrow_db
     steps: # a collection of executable commands
       - checkout # special step to check out source code to working directory
       - run:
@@ -21,8 +25,16 @@ jobs: # a collection of steps
       #       paths:
       #         - ./node_modules
       - run: # run tests
-          name: test
+          name: Migrate database and Run Test
           command: npm test
+          environment:
+            JWT_SECRET: 'SecretOrPrivateKey'
+            DEV_DB_URL: 'postgres://safescrow_user@localhost:5432/safescrow_db'
+      - run: # Drop DB
+          name: Drop Database
+          command: npm run migrate:drop
+          environment:
+            DEV_DB_URL: 'postgres://safescrow_user@localhost:5432/safescrow_db'
       - run: # run coverage report
           name: code-coverage
           command: './node_modules/.bin/nyc report --reporter=text-lcov'
