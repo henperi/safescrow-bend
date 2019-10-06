@@ -1,8 +1,8 @@
 import * as Sequelize from 'sequelize';
 
 // interfaces
-import { UserInstance } from '../db/models/user/user.interface';
-import { EmailOrPhone, UserData } from '../interfaces/UserRepository.interface';
+import { UserInstance, UserAttributes } from '../db/models/user/user.interface';
+import { EmailOrPhone } from '../interfaces/UserRepository.interface';
 
 // models
 import models from '../db/models';
@@ -17,6 +17,8 @@ const { Op } = Sequelize;
  */
 class UserRepository extends Repository {
   private static User: typeof models.User = models.User;
+
+  private static Profile: typeof models.Profile = models.Profile;
 
   /**
    * Method to get a user by either his email or phone
@@ -38,8 +40,10 @@ class UserRepository extends Repository {
    * @param userData - An object containig the info of the user to create
    * @returns {Promise<UserInstance | null>} The found user or null
    */
-  static async create(userData: UserData): Promise<UserInstance> {
-    return this.User.create(userData).catch(error => {
+  static async create(userData: UserAttributes): Promise<UserInstance> {
+    return this.User.create(userData, {
+      include: [{ model: this.Profile, as: 'Profile' }],
+    }).catch(error => {
       throw new Error(error);
     });
   }

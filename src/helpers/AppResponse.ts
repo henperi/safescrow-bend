@@ -171,7 +171,6 @@ class AppResponse {
       if (process.env.NODE_ENV === 'production') {
         return 'This error might be from us, send us a message via help@safescrows.com if this continues';
       }
-      console.log(errors);
 
       return errors.toString();
     };

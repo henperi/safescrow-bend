@@ -16,7 +16,7 @@ class AuthController {
    * @returns Promise<void>
    */
   static async createUser(req: Express.Request, res: Express.Response): Promise<void> {
-    const { firstName, middleName, lastName, phone, email, password, accountType } = req.body;
+    const { firstName, lastName, phone, email, password, accountType } = req.body;
 
     try {
       const user = await UserRepository.getByEmailOrPhone({ email, phone });
@@ -26,14 +26,15 @@ class AuthController {
       }
 
       const newUser = await UserRepository.create({
-        firstName,
-        middleName,
-        lastName,
         accountType,
         phone,
         email,
         password: hashPassword(password),
         secretKey: `${generateUniqueId()}-${email}`,
+        Profile: {
+          firstName,
+          lastName,
+        },
       });
       const token = generateUserToken(setupTokenData(newUser as TokenData));
 

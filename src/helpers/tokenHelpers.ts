@@ -27,7 +27,7 @@ const setupTokenData = (data: TokenData): TokenData => ({
   uniqueId: data.uniqueId,
   email: data.email,
   phone: data.phone,
-  firstName: data.firstName,
+  Profile: { firstName: data.Profile.firstName, lastName: data.Profile.lastName },
   accountType: data.accountType,
   secretKey: data.secretKey,
 });

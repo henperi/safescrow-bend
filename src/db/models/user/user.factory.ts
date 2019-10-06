@@ -15,15 +15,6 @@ export const userFactory = (
       type: DataTypes.STRING,
       defaultValue: generateUniqueId(),
     },
-    firstName: {
-      type: DataTypes.STRING,
-    },
-    middleName: {
-      type: DataTypes.STRING,
-    },
-    lastName: {
-      type: DataTypes.STRING,
-    },
     phone: {
       type: DataTypes.STRING,
     },
@@ -37,12 +28,19 @@ export const userFactory = (
       type: DataTypes.STRING,
     },
     accountType: {
-      type: DataTypes.STRING,
+      type: DataTypes.ENUM('Customer', 'Merchant'),
       defaultValue: 'Customer',
     },
   };
 
   const User = sequelize.define<UserInstance, UserAttributes>('User', attributes);
+
+  User.associate = (models): void => {
+    User.hasOne(models.Profile, {
+      foreignKey: 'userId',
+      as: 'Profile',
+    });
+  };
 
   return User;
 };

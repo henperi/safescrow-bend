@@ -1,14 +1,13 @@
+/* eslint-disable import/no-cycle */
 // eslint-disable-next-line
 // @ts-ignore
 // eslint-disable-next-line
 import * as SequelizeTypes from '@types/sequelize';
+import { ProfileInstance, ProfileAttributes } from '../profile/profile.interface';
 
 export interface UserAttributes {
   id?: number;
   uniqueId?: string;
-  firstName: string;
-  middleName: string;
-  lastName: string;
   phone: string;
   email: string;
   password: string;
@@ -16,12 +15,16 @@ export interface UserAttributes {
   secretKey?: string;
   createdAt?: Date;
   updatedAt?: Date;
+  // Associations
+  Profile?: ProfileAttributes | ProfileAttributes['id'];
 }
 
 export interface UserInstance extends SequelizeTypes.Instance<UserAttributes>, UserAttributes {
-  // At the moment, there's nothing more to add apart
-  // from the methods and attributes that the types
-  // `Sequelize.Instance<UserAttributes>` and
-  // `UserAttributes` give us. We'll add more here when
-  //  We get on to adding associations
+  // UserInstance methods for HasOne Profile
+  createProfile: SequelizeTypes.HasOneCreateAssociationMixin<ProfileAttributes>;
+  getProfile: SequelizeTypes.HasOneGetAssociationMixin<ProfileInstance>;
+  setProfile: SequelizeTypes.HasOneSetAssociationMixin<
+    ProfileInstance,
+    ProfileAttributes['userId']
+  >;
 }

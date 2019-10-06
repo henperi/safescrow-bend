@@ -17,8 +17,7 @@ class AuthSchema {
         .required(),
       middleName: Joi.string()
         .min(3)
-        .max(15)
-        .required(),
+        .max(15),
       lastName: Joi.string()
         .min(3)
         .max(15)
