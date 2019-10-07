@@ -51,6 +51,8 @@
         "matchDescription": ".+"
       }
     ],
-    "no-multiple-empty-lines": "error"
+    "no-multiple-empty-lines": "error",
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/indent": "off"
   }
 }

@@ -5,6 +5,7 @@ import * as dotenv from 'dotenv';
 
 import { DbInterface } from '../../interfaces/db.interface';
 import { userFactory } from './user/user.factory';
+import { profileFactory } from './profile/profile.factory';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const config = require('./../config');
@@ -28,6 +29,7 @@ export const createModels = (): DbInterface => {
     sequelize,
     Sequelize,
     User: userFactory(sequelize, Sequelize),
+    Profile: profileFactory(sequelize, Sequelize),
   };
 
   Object.keys(db).forEach((modelName: string) => {

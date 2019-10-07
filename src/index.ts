@@ -1,4 +1,5 @@
 import * as express from 'express';
+import { log } from 'util';
 import bootstrapApp from './bootstrapApp';
 
 const app = express();
@@ -13,10 +14,10 @@ const startServer = (): void => {
     const server = bootstrapApp(app);
 
     server.listen(port, () => {
-      console.log(`connected on port ${port}`);
+      log(`connected on port ${port}`);
     });
   } catch (error) {
-    console.log(error);
+    log(error);
     process.exit();
   }
 };

@@ -3,6 +3,7 @@
 // eslint-disable-next-line
 import * as SequelizeTypes from '@types/sequelize';
 
+import generateUniqueId from '../../../helpers/generateUniqueId';
 import { UserAttributes, UserInstance } from './user.interface';
 
 export const userFactory = (
@@ -10,14 +11,9 @@ export const userFactory = (
   DataTypes: SequelizeTypes.DataTypes,
 ): SequelizeTypes.Model<UserInstance, UserAttributes> => {
   const attributes: SequelizeTypes.DefineModelAttributes<UserAttributes> = {
-    firstName: {
+    uniqueId: {
       type: DataTypes.STRING,
-    },
-    middleName: {
-      type: DataTypes.STRING,
-    },
-    lastName: {
-      type: DataTypes.STRING,
+      defaultValue: generateUniqueId(),
     },
     phone: {
       type: DataTypes.STRING,
@@ -32,11 +28,19 @@ export const userFactory = (
       type: DataTypes.STRING,
     },
     accountType: {
-      type: DataTypes.STRING,
+      type: DataTypes.ENUM('Customer', 'Merchant'),
+      defaultValue: 'Customer',
     },
   };
 
   const User = sequelize.define<UserInstance, UserAttributes>('User', attributes);
+
+  User.associate = (models): void => {
+    User.hasOne(models.Profile, {
+      foreignKey: 'userId',
+      as: 'Profile',
+    });
+  };
 
   return User;
 };
