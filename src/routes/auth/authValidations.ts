@@ -2,6 +2,7 @@
 import * as Express from 'express';
 
 // Route Schemas
+import { PhoneHelper } from '../../helpers/PhoneHelper';
 import AuthSchema from './AuthSchema';
 
 // Utils | Helpers
@@ -29,4 +30,27 @@ const validateCreateUser = async (
   }
 };
 
-export { validateCreateUser };
+const validatePhoneNumber = async (
+  req: Express.Request,
+  res: Express.Response,
+  next: Express.NextFunction,
+): Promise<Express.NextFunction | void> => {
+  try {
+    await PhoneHelper.isValid(req.body.phone);
+
+    return next();
+  } catch (error) {
+    return AppResponse.badRequest(res, {
+      errors: {
+        details: [
+          {
+            message: 'phone number is not invalid',
+            path: 'phone',
+          },
+        ],
+      },
+    });
+  }
+};
+
+export { validateCreateUser, validatePhoneNumber };

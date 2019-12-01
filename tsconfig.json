@@ -19,6 +19,6 @@
 
     "allowJs": true
   },
-  "include": ["./src/**/*.ts", "./src/**/*.js", "src/db/models/index.ts"],
-  "exclude": ["./src/public/"]
+  "include": ["./src/@types/", "./src/**/*.ts", "./src/**/*.js", "src/db/models/index.ts"],
+  "exclude": ["./src/public/", "./src/@types/"]
 }
