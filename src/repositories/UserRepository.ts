@@ -2,7 +2,7 @@ import * as Sequelize from 'sequelize';
 
 // interfaces
 import { UserInstance, UserAttributes } from '../db/models/user/user.interface';
-import { EmailOrPhone } from '../interfaces/UserRepository.interface';
+import { EmailOrPhone } from '../interfaces/User.interface';
 
 // models
 import models from '../db/models';
@@ -19,6 +19,21 @@ class UserRepository extends Repository {
   private static User: typeof models.User = models.User;
 
   private static Profile: typeof models.Profile = models.Profile;
+
+  /**
+   * Method to get a user by his uniqueId
+   * @param uniqueId - The id of the user
+   * @returns {Promise<UserInstance | null>} The found user or null
+   */
+  static async getByUniqueId(uniqueId: string): Promise<UserInstance | null> {
+    return this.User.findOne({
+      where: {
+        [Op.or]: [{ uniqueId }],
+      },
+    }).catch(error => {
+      throw new Error(error);
+    });
+  }
 
   /**
    * Method to get a user by either his email or phone

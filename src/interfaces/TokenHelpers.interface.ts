@@ -8,4 +8,6 @@ export interface TokenData {
   Profile: ProfileAttributes;
   accountType: string;
   secretKey: string;
+  iat?: number;
+  exp?: number;
 }

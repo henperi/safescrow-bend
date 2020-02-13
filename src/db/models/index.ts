@@ -3,9 +3,10 @@
 import Sequelize from 'sequelize';
 import * as dotenv from 'dotenv';
 
-import { DbInterface } from '../../interfaces/db.interface';
+import { DbInterface } from '../db.interface';
 import { userFactory } from './user/user.factory';
 import { profileFactory } from './profile/profile.factory';
+import { addressFactory } from './address/address.factory';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const config = require('./../config');
@@ -30,6 +31,7 @@ export const createModels = (): DbInterface => {
     Sequelize,
     User: userFactory(sequelize, Sequelize),
     Profile: profileFactory(sequelize, Sequelize),
+    Address: addressFactory(sequelize, Sequelize),
   };
 
   Object.keys(db).forEach((modelName: string) => {
