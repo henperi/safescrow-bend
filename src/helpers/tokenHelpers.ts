@@ -15,7 +15,7 @@ const JWT_SECRET = process.env.JWT_SECRET as string;
 const generateUserToken = (userTokenData: TokenData): string => {
   try {
     return jwt.sign(userTokenData, JWT_SECRET, {
-      expiresIn: '2s',
+      expiresIn: '2d',
     });
   } catch (error) {
     throw new Error(error);

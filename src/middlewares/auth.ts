@@ -35,18 +35,17 @@ const checkUserAuth = async (
     return next();
   } catch (error) {
     const errorName = error.message.split(': ')[0];
-    let message = 'An error occured while attempting to authenticate you';
+    let message;
 
-    if (errorName === 'TokenExpiredError') {
-      message = 'Your authentication token has expired';
-    }
-    if (errorName === 'JsonWebTokenError') {
-      message = 'Your authentication token is invalid';
+    if (errorName === 'TokenExpiredError' || errorName === 'JsonWebTokenError') {
+      message = 'Your authentication token is either invalid or expired';
+
+      return AppResponse.unAuthorized(res, {
+        message,
+      });
     }
 
-    return AppResponse.serverError(res, {
-      message,
-    });
+    return AppResponse.serverError(res);
   }
 };
 

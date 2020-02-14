@@ -18,7 +18,7 @@ export interface UserAttributes {
   updatedAt?: Date;
   // Associations
   Profile?: ProfileAttributes | ProfileAttributes['id'];
-  Address?: AddressAttributes;
+  Address?: AddressAttributes | AddressAttributes['id'];
 }
 
 export interface UserInstance extends SequelizeTypes.Instance<UserAttributes>, UserAttributes {

@@ -24,15 +24,19 @@ export const addressFactory = (
     landMark: {
       type: DataTypes.STRING,
     },
-    userId: {
-      type: DataTypes.INTEGER,
-    },
     addressType: {
       type: DataTypes.STRING,
     },
   };
 
   const Address = sequelize.define<AddressInstance, AddressAttributes>('Address', attributes);
+
+  Address.associate = (models): void => {
+    Address.belongsTo(models.User, {
+      foreignKey: 'userId',
+      as: 'Address',
+    });
+  };
 
   return Address;
 };

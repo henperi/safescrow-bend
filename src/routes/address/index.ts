@@ -12,11 +12,6 @@ const addressRouter = express.Router();
 /**
  * Create a user's address
  */
-addressRouter.post(
-  '/',
-  validateCreateAddress,
-  checkUserAuth,
-  AddressController.createAddress,
-);
+addressRouter.post('/', validateCreateAddress, checkUserAuth, AddressController.createAddress);
 
 export { addressRouter };

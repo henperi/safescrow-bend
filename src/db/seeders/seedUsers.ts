@@ -9,10 +9,12 @@ import generateUniqueId from '../../helpers/generateUniqueId';
 faker.seed(100);
 
 export const seedUsers = (): Promise<void> =>
-  new Promise((resolve): void => {
+  new Promise((): void => {
     try {
       let count = 0;
       const numberOfUsers = 50;
+
+      const { city, state, streetAddress, secondaryAddress, streetName } = faker.address;
 
       lodash.times(numberOfUsers, async () => {
         const firstName = faker.name.firstName();
@@ -38,6 +40,14 @@ export const seedUsers = (): Promise<void> =>
           Profile: {
             firstName,
             lastName,
+          },
+          Address: {
+            city: city(),
+            state: state(),
+            line1: streetAddress(),
+            line2: secondaryAddress(),
+            landMark: streetName(),
+            addressType: count % 10 === 0 ? 'Delivery' : 'Home',
           },
         });
       });
