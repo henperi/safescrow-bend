@@ -75,9 +75,9 @@ class UserRepository extends Repository {
       {
         include: [
           { model: this.Profile, as: 'Profile' },
-          { model: this.Address, as: 'Address' },
           { model: this.MainWallet, as: 'MainWallet' },
           { model: this.EscrowWallet, as: 'EscrowWallet' },
+          { model: this.Address, as: 'Address' },
         ],
       },
     ).catch(error => {
