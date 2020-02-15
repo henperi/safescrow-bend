@@ -7,6 +7,8 @@ import { DbInterface } from '../db.interface';
 import { userFactory } from './user/user.factory';
 import { profileFactory } from './profile/profile.factory';
 import { addressFactory } from './address/address.factory';
+import { mainWalletFactory } from './mainWallet/mainWallet.factory';
+import { escrowWalletFactory } from './escrowWallet/escrowWallet.factory';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const config = require('./../config');
@@ -32,6 +34,8 @@ export const createModels = (): DbInterface => {
     User: userFactory(sequelize, Sequelize),
     Profile: profileFactory(sequelize, Sequelize),
     Address: addressFactory(sequelize, Sequelize),
+    MainWallet: mainWalletFactory(sequelize, Sequelize),
+    EscrowWallet: escrowWalletFactory(sequelize, Sequelize),
   };
 
   Object.keys(db).forEach((modelName: string) => {

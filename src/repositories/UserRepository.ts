@@ -1,6 +1,7 @@
 import * as Sequelize from 'sequelize';
 
 // interfaces
+import generateUniqueId from '../helpers/generateUniqueId';
 import { UserInstance, UserAttributes } from '../db/models/user/user.interface';
 import { EmailOrPhone } from '../interfaces/User.interface';
 
@@ -21,6 +22,10 @@ class UserRepository extends Repository {
   private static Profile: typeof models.Profile = models.Profile;
 
   private static Address: typeof models.Address = models.Address;
+
+  private static MainWallet: typeof models.MainWallet = models.MainWallet;
+
+  private static EscrowWallet: typeof models.EscrowWallet = models.EscrowWallet;
 
   /**
    * Method to get a user by his uniqueId
@@ -58,9 +63,24 @@ class UserRepository extends Repository {
    * @returns {Promise<UserInstance | null>} The found user or null
    */
   static async create(userData: UserAttributes): Promise<UserInstance> {
-    return this.User.create(userData, {
-      include: [{ model: this.Profile, as: 'Profile' }, { model: this.Address, as: 'Address' }],
-    }).catch(error => {
+    const walletId = generateUniqueId();
+
+    return this.User.create(
+      {
+        ...userData,
+        uniqueId: walletId,
+        MainWallet: { walletId },
+        EscrowWallet: { walletId },
+      },
+      {
+        include: [
+          { model: this.Profile, as: 'Profile' },
+          { model: this.Address, as: 'Address' },
+          { model: this.MainWallet, as: 'MainWallet' },
+          { model: this.EscrowWallet, as: 'EscrowWallet' },
+        ],
+      },
+    ).catch(error => {
       throw new Error(error);
     });
   }

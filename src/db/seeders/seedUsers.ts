@@ -32,6 +32,7 @@ export const seedUsers = (): Promise<void> =>
         count += 1;
 
         await UserRepository.create({
+          uniqueId: generateUniqueId(),
           phone,
           email,
           password: hashPassword(password),
