@@ -8,8 +8,9 @@ import generateUniqueId from '../../helpers/generateUniqueId';
 
 faker.seed(100);
 
-export const seedUsers = (): Promise<void> =>
-  new Promise((): void => {
+export const seedUsers = async (): Promise<void> => {
+  await new Promise((resolve, reject): void => {
+    log('Seeding Users...');
     try {
       let count = 0;
       const numberOfUsers = 50;
@@ -25,11 +26,16 @@ export const seedUsers = (): Promise<void> =>
 
         const user = await UserRepository.getByEmailOrPhone({ email, phone });
 
+        count += 1;
+        process.stdout.write(`#${count === numberOfUsers ? '\n' : ''}`);
+
         if (user) {
+          if (count === numberOfUsers) {
+            resolve();
+          }
+
           return;
         }
-
-        count += 1;
 
         await UserRepository.create({
           uniqueId: generateUniqueId(),
@@ -51,9 +57,17 @@ export const seedUsers = (): Promise<void> =>
             addressType: count % 10 === 0 ? 'Delivery' : 'Home',
           },
         });
+
+        if (count === numberOfUsers) {
+          resolve();
+        }
       });
     } catch (error) {
       log(error);
+      reject(error);
       throw error;
     }
   });
+
+  log('Finished Seeding Users\n');
+};

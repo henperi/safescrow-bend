@@ -32,6 +32,10 @@ export const escrowWalletFactory = (
       foreignKey: 'userId',
       as: 'User',
     });
+    EscrowWallet.hasMany(models.Transaction, {
+      foreignKey: 'walletId',
+      as: 'Transactions',
+    });
   };
 
   return EscrowWallet;
