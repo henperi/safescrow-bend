@@ -2,7 +2,7 @@ import * as chai from 'chai';
 import * as express from 'express';
 
 import bootstrapApp from '../../src/bootstrapApp';
-import { validSignupData, invalidSignupData } from '../mocks/auth.mock';
+import { validSignupData, invalidSignupData, authorization } from '../mocks/auth.mock';
 
 import chaiHttp = require('chai-http');
 
@@ -30,6 +30,8 @@ describe('Auth Endpoint Test Suite', () => {
       .request(server)
       .post(signupEndpoint)
       .send(validSignupData);
+
+    authorization.validToken = result.body.data.token;
 
     expect(result.body.statusCode).to.be.equal(201);
   });

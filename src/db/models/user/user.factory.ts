@@ -40,6 +40,10 @@ export const userFactory = (
       foreignKey: 'userId',
       as: 'Profile',
     });
+    User.hasOne(models.Address, {
+      foreignKey: 'userId',
+      as: 'Address',
+    });
   };
 
   return User;

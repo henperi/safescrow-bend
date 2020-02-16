@@ -4,6 +4,7 @@
 // eslint-disable-next-line
 import * as SequelizeTypes from '@types/sequelize';
 import { ProfileInstance, ProfileAttributes } from '../profile/profile.interface';
+import { AddressAttributes, AddressInstance } from '../address/address.interface';
 
 export interface UserAttributes {
   id?: number;
@@ -17,6 +18,7 @@ export interface UserAttributes {
   updatedAt?: Date;
   // Associations
   Profile?: ProfileAttributes | ProfileAttributes['id'];
+  Address?: AddressAttributes | AddressAttributes['id'];
 }
 
 export interface UserInstance extends SequelizeTypes.Instance<UserAttributes>, UserAttributes {
@@ -26,5 +28,13 @@ export interface UserInstance extends SequelizeTypes.Instance<UserAttributes>, U
   setProfile: SequelizeTypes.HasOneSetAssociationMixin<
     ProfileInstance,
     ProfileAttributes['userId']
+  >;
+
+  // UserInstance methods for HasOne Address
+  createAddress: SequelizeTypes.HasOneCreateAssociationMixin<AddressAttributes>;
+  getAddress: SequelizeTypes.HasOneGetAssociationMixin<AddressInstance>;
+  setAddress: SequelizeTypes.HasOneSetAssociationMixin<
+    AddressInstance,
+    AddressAttributes['userId']
   >;
 }

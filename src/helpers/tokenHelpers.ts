@@ -22,6 +22,19 @@ const generateUserToken = (userTokenData: TokenData): string => {
   }
 };
 
+/**
+ * Method to verify a user's token
+ * @param userToken - The token to validate
+ * @returns {TokenData | string} Returns the decoded token
+ */
+const verifyUserToken = (userToken: string): TokenData | string => {
+  try {
+    return jwt.verify(userToken, JWT_SECRET) as TokenData;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
 const setupTokenData = (data: TokenData): TokenData => ({
   id: data.id,
   uniqueId: data.uniqueId,
@@ -32,4 +45,4 @@ const setupTokenData = (data: TokenData): TokenData => ({
   secretKey: data.secretKey,
 });
 
-export { generateUserToken, setupTokenData };
+export { generateUserToken, verifyUserToken, setupTokenData };
