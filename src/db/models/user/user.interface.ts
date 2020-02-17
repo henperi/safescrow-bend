@@ -5,6 +5,8 @@
 import * as SequelizeTypes from '@types/sequelize';
 import { ProfileInstance, ProfileAttributes } from '../profile/profile.interface';
 import { AddressAttributes, AddressInstance } from '../address/address.interface';
+import { MainWalletAttributes } from '../mainWallet/mainWallet.interface';
+import { EscrowWalletAttributes } from '../escrowWallet/escrowWallet.interface';
 
 export interface UserAttributes {
   id?: number;
@@ -19,6 +21,8 @@ export interface UserAttributes {
   // Associations
   Profile?: ProfileAttributes | ProfileAttributes['id'];
   Address?: AddressAttributes | AddressAttributes['id'];
+  MainWallet?: MainWalletAttributes | MainWalletAttributes['id'];
+  EscrowWallet?: EscrowWalletAttributes | EscrowWalletAttributes['id'];
 }
 
 export interface UserInstance extends SequelizeTypes.Instance<UserAttributes>, UserAttributes {

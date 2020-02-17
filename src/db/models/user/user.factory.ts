@@ -13,6 +13,7 @@ export const userFactory = (
   const attributes: SequelizeTypes.DefineModelAttributes<UserAttributes> = {
     uniqueId: {
       type: DataTypes.STRING,
+      unique: true,
       defaultValue: generateUniqueId(),
     },
     phone: {
@@ -43,6 +44,14 @@ export const userFactory = (
     User.hasOne(models.Address, {
       foreignKey: 'userId',
       as: 'Address',
+    });
+    User.hasOne(models.MainWallet, {
+      foreignKey: 'userId',
+      as: 'MainWallet',
+    });
+    User.hasOne(models.EscrowWallet, {
+      foreignKey: 'userId',
+      as: 'EscrowWallet',
     });
   };
 
