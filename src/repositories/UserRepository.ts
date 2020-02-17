@@ -37,8 +37,6 @@ class UserRepository extends Repository {
       where: {
         [Op.or]: [{ uniqueId }],
       },
-    }).catch(error => {
-      throw new Error(error);
     });
   }
 
@@ -52,8 +50,6 @@ class UserRepository extends Repository {
       where: {
         [Op.or]: [{ email }, { phone }],
       },
-    }).catch(error => {
-      throw new Error(error);
     });
   }
 
@@ -80,9 +76,7 @@ class UserRepository extends Repository {
           { model: this.Address, as: 'Address' },
         ],
       },
-    ).catch(error => {
-      throw new Error(error);
-    });
+    );
   }
 }
 

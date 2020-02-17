@@ -34,7 +34,7 @@ const checkUserAuth = async (
 
     return next();
   } catch (error) {
-    const errorName = error.message.split(': ')[0];
+    const errorName = error.name;
     let message;
 
     if (errorName === 'TokenExpiredError' || errorName === 'JsonWebTokenError') {
@@ -45,7 +45,7 @@ const checkUserAuth = async (
       });
     }
 
-    return AppResponse.serverError(res);
+    return AppResponse.serverError(res, { errors: error });
   }
 };
 

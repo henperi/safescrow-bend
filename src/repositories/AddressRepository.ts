@@ -31,8 +31,6 @@ class AddressRepository extends Repository {
       where: {
         [Op.and]: [{ userId }, { addressType }],
       },
-    }).catch(error => {
-      throw new Error(error);
     });
   }
 
@@ -42,9 +40,7 @@ class AddressRepository extends Repository {
    * @returns {Promise<AddressInstance | null>} The created address
    */
   static async create(addressData: AddressAttributes): Promise<AddressInstance> {
-    return this.Address.create(addressData, {}).catch(error => {
-      throw new Error(error);
-    });
+    return this.Address.create(addressData, {});
   }
 }
 
