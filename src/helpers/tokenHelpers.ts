@@ -12,29 +12,24 @@ const JWT_SECRET = process.env.JWT_SECRET as string;
  * @param userTokenData data used to generate the token
  * @returns Returns the generated token
  */
-const generateUserToken = (userTokenData: TokenData): string => {
-  try {
-    return jwt.sign(userTokenData, JWT_SECRET, {
-      expiresIn: '2d',
-    });
-  } catch (error) {
-    throw new Error(error);
-  }
-};
+const generateUserToken = (userTokenData: TokenData): string =>
+  jwt.sign(userTokenData, JWT_SECRET, {
+    expiresIn: '2d',
+  });
 
 /**
  * Method to verify a user's token
  * @param userToken - The token to validate
- * @returns {TokenData | string} Returns the decoded token
+ * @returns - Returns the decoded token
  */
-const verifyUserToken = (userToken: string): TokenData | string => {
-  try {
-    return jwt.verify(userToken, JWT_SECRET) as TokenData;
-  } catch (error) {
-    throw new Error(error);
-  }
-};
+const verifyUserToken = (userToken: string): TokenData | string =>
+  jwt.verify(userToken, JWT_SECRET) as TokenData;
 
+/**
+ * Method to filter the tokenData and return what is necessary
+ * @param data - The token to validate
+ * @returns - Returns a filtered tokenData
+ */
 const setupTokenData = (data: TokenData): TokenData => ({
   id: data.id,
   uniqueId: data.uniqueId,

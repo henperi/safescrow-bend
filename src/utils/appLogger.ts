@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable no-console */
+import { log } from 'console';
 
 export const appLogger = (...data: any): void => {
-  console.log(data);
+  log(data);
 };

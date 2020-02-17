@@ -27,8 +27,6 @@ export class EscrowWalletRepository extends Repository {
       where: {
         [Op.or]: [{ userId }],
       },
-    }).catch(error => {
-      throw new Error(error);
     });
   }
 }
