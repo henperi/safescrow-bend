@@ -32,6 +32,10 @@ export const mainWalletFactory = (
       foreignKey: 'userId',
       as: 'User',
     });
+    MainWallet.hasMany(models.Transaction, {
+      foreignKey: 'walletId',
+      as: 'Transactions',
+    });
   };
 
   return MainWallet;
