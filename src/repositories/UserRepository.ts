@@ -42,7 +42,7 @@ class UserRepository extends Repository {
 
   /**
    * Method to get a user by either his email or phone
-   * @param data - An object containig the email and phone
+   * @param data - An object containing the email and phone
    * @returns {Promise<UserInstance | null>} The found user or null
    */
   static async getByEmailOrPhone({ email, phone }: EmailOrPhone): Promise<UserInstance | null> {
@@ -50,6 +50,18 @@ class UserRepository extends Repository {
       where: {
         [Op.or]: [{ email }, { phone }],
       },
+    });
+  }
+
+  /**
+   * Method to get a user by his email
+   * @param email - user's email
+   * @returns {Promise<UserInstance | null>} The found user or null
+   */
+  static getByEmail(email: string): Promise<UserInstance | null> {
+    return this.User.findOne({
+      where: { email },
+      include: [{ model: this.Profile, as: 'Profile' }],
     });
   }
 
@@ -77,6 +89,39 @@ class UserRepository extends Repository {
         ],
       },
     );
+  }
+
+  /**
+   * Method to get a user by uniqueId and SecretKey
+   * @param uniqueId - The user's uniqueId
+   * @param secretKey - The user's secret key
+   * @returns {Promise<UserInstance | null>} The found user or null
+   */
+  static getByUniqueIdAndSecretKey(
+    uniqueId: string,
+    secretKey: string,
+  ): Promise<UserInstance | null> {
+    return this.User.findOne({
+      where: { uniqueId, secretKey },
+      include: [{ model: this.Profile, as: 'Profile' }],
+    });
+  }
+
+  /**
+   * Method to update a user's password
+   * @param user - A User instance
+   * @param password - The new password
+   * @param secretKey - The new secret key
+   * @returns {Promise<UserInstance | null>} The found user or null
+   */
+  static async updatePassword(
+    user: UserInstance,
+    password: string,
+    secretKey: string,
+  ): Promise<UserInstance> {
+    await user.update({ password, secretKey });
+
+    return user;
   }
 }
 
