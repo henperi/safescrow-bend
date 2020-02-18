@@ -15,15 +15,11 @@ class AppResponse {
    */
   public static success(
     res: Express.Response,
-    {
-      message = 'Request Successful',
-      statusCode = 200,
-      data = {},
-    }: SuccessData = {} as SuccessData,
+    { message = 'Request Successful', data = {} }: SuccessData = {} as SuccessData,
   ): void {
-    res.status(statusCode).json({
+    res.status(200).json({
       success: true,
-      statusCode,
+      statusCode: 200,
       message,
       data,
     });
@@ -37,15 +33,11 @@ class AppResponse {
    */
   public static created(
     res: Express.Response,
-    {
-      message = 'Created Successfully',
-      statusCode = 201,
-      data = {},
-    }: SuccessData = {} as SuccessData,
+    { message = 'Created Successfully', data = {} }: SuccessData = {} as SuccessData,
   ): void {
-    res.status(statusCode).json({
+    res.status(201).json({
       success: true,
-      statusCode,
+      statusCode: 201,
       message,
       data,
     });
@@ -59,11 +51,11 @@ class AppResponse {
    */
   public static badRequest(
     res: Express.Response,
-    { message = 'Bad Request', statusCode = 400, errors = {} }: ErrorsData = {} as ErrorsData,
+    { message = 'Bad Request', errors = {} }: ErrorsData = {} as ErrorsData,
   ): void {
-    res.status(statusCode).json({
+    res.status(400).json({
       success: false,
-      statusCode,
+      statusCode: 400,
       message,
       errors,
     });
@@ -77,15 +69,11 @@ class AppResponse {
    */
   public static unAuthorized(
     res: Express.Response,
-    {
-      message = 'Unauthorized Request',
-      statusCode = 401,
-      errors = {},
-    }: ErrorsData = {} as ErrorsData,
+    { message = 'Unauthorized Request', errors = {} }: ErrorsData = {} as ErrorsData,
   ): void {
-    res.status(statusCode).json({
+    res.status(401).json({
       success: false,
-      statusCode,
+      statusCode: 401,
       message,
       errors,
     });
@@ -99,15 +87,11 @@ class AppResponse {
    */
   public static notFound(
     res: Express.Response,
-    {
-      message = 'Resource not found',
-      statusCode = 404,
-      errors = {},
-    }: ErrorsData = {} as ErrorsData,
+    { message = 'Resource not found', errors = {} }: ErrorsData = {} as ErrorsData,
   ): void {
-    res.status(statusCode).json({
+    res.status(404).json({
       success: false,
-      statusCode,
+      statusCode: 404,
       message,
       errors,
     });
@@ -121,11 +105,11 @@ class AppResponse {
    */
   public static forbidden(
     res: Express.Response,
-    { message = 'Request Forbidden', statusCode = 403, errors = {} }: ErrorsData = {} as ErrorsData,
+    { message = 'Request Forbidden', errors = {} }: ErrorsData = {} as ErrorsData,
   ): void {
-    res.status(statusCode).json({
+    res.status(403).json({
       success: false,
-      statusCode,
+      statusCode: 403,
       message,
       errors,
     });
@@ -139,15 +123,11 @@ class AppResponse {
    */
   public static conflict(
     res: Express.Response,
-    {
-      message = 'Conflicting Request',
-      statusCode = 409,
-      errors = {},
-    }: ErrorsData = {} as ErrorsData,
+    { message = 'Conflicting Request', errors = {} }: ErrorsData = {} as ErrorsData,
   ): void {
-    res.status(statusCode).json({
+    res.status(409).json({
       success: false,
-      statusCode,
+      statusCode: 409,
       message,
       errors,
     });
@@ -161,11 +141,7 @@ class AppResponse {
    */
   public static serverError(
     res: Express.Response,
-    {
-      message = 'An internal error occured',
-      statusCode = 500,
-      errors = {},
-    }: ErrorsData = {} as ErrorsData,
+    { message = 'An internal error occured', errors = {} }: ErrorsData = {} as ErrorsData,
   ): void {
     const getErrors = (): string => {
       if (process.env.NODE_ENV === 'production') {
@@ -175,9 +151,9 @@ class AppResponse {
       return errors.toString();
     };
 
-    res.status(statusCode).json({
+    res.status(500).json({
       success: false,
-      statusCode,
+      statusCode: 500,
       message,
       errors: getErrors(),
     });
