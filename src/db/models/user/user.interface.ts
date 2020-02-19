@@ -19,7 +19,8 @@ export interface UserAttributes {
   createdAt?: Date;
   updatedAt?: Date;
   // Associations
-  Profile?: ProfileAttributes | ProfileAttributes['id'];
+  // Profile?: ProfileAttributes | ProfileAttributes['id'];
+  Profile?: ProfileAttributes;
   Address?: AddressAttributes | AddressAttributes['id'];
   MainWallet?: MainWalletAttributes | MainWalletAttributes['id'];
   EscrowWallet?: EscrowWalletAttributes | EscrowWalletAttributes['id'];

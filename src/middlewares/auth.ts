@@ -2,7 +2,7 @@
 import * as Express from 'express';
 import UserRepository from '../repositories/UserRepository';
 import { AppResponse } from '../helpers/AppResponse';
-import { verifyUserToken } from '../helpers/tokenHelpers';
+import { verifyUserToken, validatePasswordResetToken } from '../helpers/tokenHelpers';
 import { TokenData } from '../interfaces/TokenHelpers.interface';
 
 const checkUserAuth = async (
@@ -49,4 +49,40 @@ const checkUserAuth = async (
   }
 };
 
-export { checkUserAuth };
+/**
+ * Method to check a User's existence
+ * @param req express request
+ * @param res express response
+ * @param next express function
+ * @returns Promise<void>
+ */
+const checkUser = async (
+  req: Express.Request,
+  res: Express.Response,
+  next: Express.NextFunction,
+): Promise<void> => {
+  let uniqueId;
+  let secretKey;
+
+  try {
+    ({ uniqueId, secretKey } = validatePasswordResetToken(req.params.tokenString));
+  } catch (errors) {
+    return AppResponse.badRequest(res, {
+      message: 'Link is either invalid or has expired, request for a new link',
+    });
+  }
+
+  const user = await UserRepository.getByUniqueIdAndSecretKey(uniqueId!, secretKey!);
+
+  if (!user) {
+    return AppResponse.notFound(res, {
+      message: `This reset link is either invalid or has been used.`,
+    });
+  }
+
+  res.locals = { ...res.locals, user };
+
+  return next();
+};
+
+export { checkUserAuth, checkUser };

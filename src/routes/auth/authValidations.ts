@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-ignore */
 import * as Express from 'express';
+import * as Joi from '@hapi/joi';
 
 // Route Schemas
 import { PhoneHelper } from '../../helpers/PhoneHelper';
@@ -10,6 +11,25 @@ import formatJoiErrors from '../../utils/formatJoiErrors';
 import { AppResponse } from '../../helpers/AppResponse';
 
 const { createUserSchema } = AuthSchema;
+
+const validate = (validatorSchema: Joi.ObjectSchema) => async (
+  req: Express.Request,
+  res: Express.Response,
+  next: Express.NextFunction,
+): Promise<Express.NextFunction | void> => {
+  try {
+    // @ts-ignore
+    await validatorSchema.validateAsync(req.body, {
+      abortEarly: false,
+    });
+
+    return next();
+  } catch (errors) {
+    return AppResponse.badRequest(res, {
+      errors: formatJoiErrors(errors),
+    });
+  }
+};
 
 const validateCreateUser = async (
   req: Express.Request,
@@ -53,4 +73,4 @@ const validatePhoneNumber = async (
   }
 };
 
-export { validateCreateUser, validatePhoneNumber };
+export { validateCreateUser, validatePhoneNumber, validate };

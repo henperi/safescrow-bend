@@ -29,6 +29,29 @@ class AuthSchema {
       accountType: Joi.string().valid('Customer', 'Merchant'),
     });
   }
+
+  /**
+   *  Schema used to validate the data relating to reseting password
+   *  @returns resetPasswordSchema
+   */
+  static get resetPasswordSchema(): Joi.ObjectSchema {
+    return Joi.object({
+      email: Joi.string()
+        .email()
+        .required(),
+    });
+  }
+
+  /**
+   *  Schema used to validate the data relating to updating password
+   *  @returns updatePasswordSchema
+   */
+  static get updatePasswordSchema(): Joi.ObjectSchema {
+    return Joi.object({
+      password: Joi.string().required(),
+      passwordRepeat: Joi.ref('password'),
+    }).with('password', 'passwordRepeat');
+  }
 }
 
 export default AuthSchema;
