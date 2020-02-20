@@ -52,6 +52,17 @@ class AuthSchema {
       passwordRepeat: Joi.ref('password'),
     }).with('password', 'passwordRepeat');
   }
+
+  /**
+   *  Schema used to validate the data relating to login a user
+   *  @returns loginUserSchema
+   */
+  static get loginUserSchema(): Joi.ObjectSchema {
+    return Joi.object({
+      emailOrPhone: Joi.string().required(),
+      password: Joi.string().required(),
+    }).with('emailOrPassword', 'password');
+  }
 }
 
 export default AuthSchema;

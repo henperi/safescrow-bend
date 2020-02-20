@@ -4,7 +4,7 @@ import { SmsHelper } from '../helpers/SmsHelper';
 import { TokenData } from '../interfaces/TokenHelpers.interface';
 import UserRepository from '../repositories/UserRepository';
 import { AppResponse } from '../helpers/AppResponse';
-import { hashPassword } from '../helpers/passwordHelpers';
+import { hashPassword, comparePassword } from '../helpers/passwordHelpers';
 import generateUniqueId from '../helpers/generateUniqueId';
 import { EmailHelper } from '../helpers/EmailHelper';
 import {
@@ -28,48 +28,79 @@ class AuthController {
   static async createUser(req: Express.Request, res: Express.Response): Promise<void> {
     const { firstName, lastName, phone, email, password, accountType } = req.body;
 
-    try {
-      const user = await UserRepository.getByEmailOrPhone({ email, phone });
+    const user = await UserRepository.getByEmailOrPhone({ email, phone });
 
-      if (user) {
-        return AppResponse.conflict(res, { message: 'This email or phone has been taken' });
-      }
+    if (user) {
+      return AppResponse.conflict(res, { message: 'This email or phone has been taken' });
+    }
 
-      const newUser = await UserRepository.create({
-        accountType,
-        phone: PhoneHelper.getInternationalFormat(phone),
-        email,
-        password: hashPassword(password),
-        secretKey: `${generateUniqueId()}-${email}`,
-        Profile: {
-          firstName,
-          lastName,
-        },
-      });
-      const token = generateUserToken(setupTokenData(newUser as TokenData));
+    const newUser = await UserRepository.create({
+      accountType,
+      phone: PhoneHelper.getInternationalFormat(phone),
+      email,
+      password: hashPassword(password),
+      secretKey: `${generateUniqueId()}-${email}`,
+      Profile: {
+        firstName,
+        lastName,
+      },
+    });
+    const token = generateUserToken(setupTokenData(newUser as TokenData));
 
-      SmsHelper.sendSms(
-        [PhoneHelper.getInternationalFormat(phone)],
-        'Thanks for signin up on Safescrow. Buy goods and services from anyone, anywhere with 99.9% buyer and seller protection',
-      );
+    SmsHelper.sendSms(
+      [PhoneHelper.getInternationalFormat(phone)],
+      'Thanks for signin up on Safescrow. Buy goods and services from anyone, anywhere with 99.9% buyer and seller protection',
+    );
 
-      EmailHelper.sendEmail({
-        to: email,
-        from: { name: 'Safescrow', email: 'support@safescrow.com' },
-        subject: 'Welcome To Safescrow',
-        html: `
+    EmailHelper.sendEmail({
+      to: email,
+      from: { name: 'Safescrow', email: 'support@safescrow.com' },
+      subject: 'Welcome To Safescrow',
+      html: `
           <p>Hello ${firstName}.</p>
           <p>
             Thanks for signing up on Safescrow.
             Buy goods and services from anyone, anywhere with 99.9% buyer and seller protection
           </p>
         `,
-      });
+    });
 
-      return AppResponse.created(res, { data: { token } });
-    } catch (errors) {
-      return AppResponse.serverError(res, { errors });
+    return AppResponse.created(res, { data: { token } });
+  }
+
+  /**
+   * Method to authenticate and login an existing user
+   * @param req express request
+   * @param res express response
+   * @returns Promise<void>
+   */
+  static async loginUser(req: Express.Request, res: Express.Response): Promise<void> {
+    const { emailOrPhone, password } = req.body;
+
+    const user = await UserRepository.getByEmailOrPhone({
+      email: emailOrPhone,
+      phone: emailOrPhone,
+    });
+
+    if (!user) {
+      return AppResponse.badRequest(res, {
+        message:
+          'Your login credentials does not match any existing records, would you like to signup?',
+      });
     }
+
+    const checkPassword = comparePassword(password, user.password);
+
+    if (!checkPassword) {
+      return AppResponse.badRequest(res, {
+        message:
+          'Your login credentials does not match any existing records, did you forget your login credentials?',
+      });
+    }
+
+    const token = generateUserToken(setupTokenData(user as TokenData));
+
+    return AppResponse.success(res, { message: 'Authenticated successfully', data: { token } });
   }
 
   /**
@@ -101,7 +132,7 @@ class AuthController {
       from: { name: 'Safescrow', email: 'support@safescrow.com' },
       subject: 'Safescrow password reset',
       html: `
-          <p>Hello ${Profile!.firstName}.</p>
+          <p>Hello ${Profile && Profile.firstName}.</p>
           <p>
             We received a request to reset your safescrow password.
             If this is you, please click this
@@ -136,7 +167,7 @@ class AuthController {
       from: { name: 'Safescrow', email: 'support@safescrow.com' },
       subject: 'Safescrow password reset',
       html: `
-          <p>Hello ${user.Profile!.firstName}.</p>
+          <p>Hello ${user.Profile && user.Profile.firstName}.</p>
           <p>
             Your safescrow password has been reset successfully.
             If this isn't you please contact us at

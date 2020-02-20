@@ -14,7 +14,12 @@ const authRouter = express.Router();
 /**
  * Signup user
  */
-authRouter.post('/signup', validateCreateUser, validatePhoneNumber, AuthController.createUser);
+authRouter.post(
+  '/signup',
+  validateCreateUser,
+  validatePhoneNumber,
+  asyncHandler(AuthController.createUser),
+);
 
 authRouter.post(
   '/reset-password',
@@ -26,6 +31,15 @@ authRouter.put(
   '/reset-password/:tokenString',
   [validate(AuthSchema.updatePasswordSchema), asyncHandler(checkUser)],
   asyncHandler(AuthController.resetPassword),
+);
+
+/**
+ * Login a User
+ */
+authRouter.post(
+  '/login',
+  [validate(AuthSchema.loginUserSchema)],
+  asyncHandler(AuthController.loginUser),
 );
 
 export default authRouter;

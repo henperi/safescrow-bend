@@ -25,6 +25,7 @@
     ],
     "exclude": [
       "**/*.interface.ts",
+      "src/db/config",
       "src/db/migrate",
       "src/db/seeders",
       "src/index.ts",

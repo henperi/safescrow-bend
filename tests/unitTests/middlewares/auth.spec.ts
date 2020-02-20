@@ -1,7 +1,7 @@
 import * as chai from 'chai';
 import * as sinon from 'sinon';
 import * as httpMocks from 'node-mocks-http';
-import { checkUser } from '../../../src/middlewares/auth';
+import { checkUser, checkUserAuth } from '../../../src/middlewares/auth';
 import UserRepository from '../../../src/repositories/UserRepository';
 import { AppResponse } from '../../../src/helpers/AppResponse';
 import * as tokenHelpers from '../../../src/helpers/tokenHelpers';
@@ -67,6 +67,51 @@ describe('auth middleware Test Suite', () => {
 
       expect(getByUniqueIdAndSecretKey.called).to.equal(true);
       expect(notFound.called).to.equal(true);
+      expect(nextFn.called).to.equal(false);
+    });
+  });
+
+  describe('authorizationHandler Test Suite', () => {
+    afterEach(() => {
+      sinon.restore();
+    });
+
+    const request = httpMocks.createRequest({
+      headers: {
+        authorization: 'token',
+      },
+    });
+
+    const response = httpMocks.createResponse();
+
+    it('should return notFound response when getByUniqueId returns null', async () => {
+      const verifyUserToken = sinon.fake.returns({ uniqueId: '', secretKey: '' });
+      const getByUniqueId = sinon.fake.resolves(null);
+      const notFound = sinon.fake();
+      const nextFn = sinon.fake();
+
+      sinon.replace(tokenHelpers, 'verifyUserToken', verifyUserToken);
+      sinon.replace(UserRepository, 'getByUniqueId', getByUniqueId);
+      sinon.replace(AppResponse, 'notFound', notFound);
+
+      await checkUserAuth(request, response, nextFn);
+
+      expect(getByUniqueId.called).to.equal(true);
+      expect(notFound.called).to.equal(true);
+      expect(nextFn.called).to.equal(false);
+    });
+
+    it('should return unAuthorized when invalid token is sent', async () => {
+      const verifyUserToken = sinon.fake.throws(new Error());
+      const unAuthorized = sinon.fake();
+      const nextFn = sinon.fake();
+
+      sinon.replace(tokenHelpers, 'verifyUserToken', verifyUserToken);
+      sinon.replace(AppResponse, 'unAuthorized', unAuthorized);
+
+      await checkUserAuth(request, response, nextFn);
+
+      expect(verifyUserToken.called).to.equal(true);
       expect(nextFn.called).to.equal(false);
     });
   });
