@@ -10,6 +10,8 @@ import { addressFactory } from './address/address.factory';
 import { mainWalletFactory } from './mainWallet/mainWallet.factory';
 import { escrowWalletFactory } from './escrowWallet/escrowWallet.factory';
 import { transactionFactory } from './transaction/transaction.factory';
+import { invoiceFactory } from './invoice/invoice.factory';
+import { invoiceItemFactory } from './invoiceItem/invoiceItem.factory';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const config = require('./../config');
@@ -38,6 +40,8 @@ export const createModels = (): DbInterface => {
     MainWallet: mainWalletFactory(sequelize, Sequelize),
     EscrowWallet: escrowWalletFactory(sequelize, Sequelize),
     Transaction: transactionFactory(sequelize, Sequelize),
+    InvoiceItem: invoiceItemFactory(sequelize, Sequelize),
+    Invoice: invoiceFactory(sequelize, Sequelize),
   };
 
   Object.keys(db).forEach((modelName: string) => {
