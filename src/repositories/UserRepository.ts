@@ -50,6 +50,7 @@ class UserRepository extends Repository {
       where: {
         [Op.or]: [{ email }, { phone }],
       },
+      include: [{ model: this.Profile, as: 'Profile' }],
     });
   }
 

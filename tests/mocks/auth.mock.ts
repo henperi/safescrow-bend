@@ -7,6 +7,11 @@ interface SignUpData {
   accountType?: string;
 }
 
+interface LoginData {
+  emailOrPhone: string;
+  password: string;
+}
+
 export const invalidSignupData: SignUpData = {
   phone: '',
   email: '',
@@ -21,6 +26,16 @@ export const validSignupData: SignUpData = {
   password: '12324242',
   firstName: 'Henry',
   lastName: 'Pere',
+};
+
+export const invalidLoginData: LoginData = {
+  emailOrPhone: '',
+  password: '',
+};
+
+export const validLoginData: LoginData = {
+  emailOrPhone: validSignupData.email,
+  password: validSignupData.password,
 };
 
 export const authorization = {
