@@ -30,10 +30,7 @@ export interface UserInstance extends SequelizeTypes.Instance<UserAttributes>, U
   // UserInstance methods for HasOne Profile
   createProfile: SequelizeTypes.HasOneCreateAssociationMixin<ProfileAttributes>;
   getProfile: SequelizeTypes.HasOneGetAssociationMixin<ProfileInstance>;
-  setProfile: SequelizeTypes.HasOneSetAssociationMixin<
-    ProfileInstance,
-    ProfileAttributes['userId']
-  >;
+  setProfile: SequelizeTypes.HasOneSetAssociationMixin<ProfileInstance, ProfileAttributes['id']>;
 
   // UserInstance methods for HasOne Address
   createAddress: SequelizeTypes.HasOneCreateAssociationMixin<AddressAttributes>;

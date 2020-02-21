@@ -2,7 +2,7 @@ import * as Express from 'express';
 import { PhoneHelper } from '../helpers/PhoneHelper';
 import { SmsHelper } from '../helpers/SmsHelper';
 import { TokenData } from '../interfaces/TokenHelpers.interface';
-import UserRepository from '../repositories/UserRepository';
+import { UserRepository } from '../repositories/UserRepository';
 import { AppResponse } from '../helpers/AppResponse';
 import { hashPassword } from '../helpers/passwordHelpers';
 import generateUniqueId from '../helpers/generateUniqueId';
