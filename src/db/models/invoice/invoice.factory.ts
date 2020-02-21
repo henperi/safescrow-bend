@@ -13,24 +13,23 @@ export const invoiceFactory = (
   const attributes: SequelizeTypes.DefineModelAttributes<InvoiceAttributes> = {
     invoiceId: {
       type: DataTypes.STRING,
-      defaultValue: generateUniqueId(),
       unique: true,
     },
     invoiceTitle: {
       type: DataTypes.STRING,
     },
-    recieverName: {
+    receiverName: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    recieverEmail: {
+    receiverEmail: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    recieverPhone: {
+    receiverPhone: {
       type: DataTypes.STRING,
     },
-    recieverAddress: {
+    receiverAddress: {
       type: DataTypes.STRING,
     },
     additionInfo: {
@@ -47,6 +46,11 @@ export const invoiceFactory = (
   };
 
   const Invoice = sequelize.define<InvoiceInstance, InvoiceAttributes>('Invoice', attributes);
+
+  Invoice.addHook('beforeCreate', (invoice: InvoiceAttributes) => {
+    // eslint-disable-next-line no-param-reassign
+    invoice.invoiceId = generateUniqueId();
+  });
 
   Invoice.associate = (models): void => {
     Invoice.hasMany(models.InvoiceItem, {

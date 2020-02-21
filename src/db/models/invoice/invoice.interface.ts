@@ -1,16 +1,17 @@
 // eslint-disable-next-line
 // @ts-ignore
 // eslint-disable-next-line
-import * as SequelizeTypes from '@types/sequelize';
+import Sequelize from 'sequelize';
+import { InvoiceItemAttributes, InvoiceItemInstance } from '../invoiceItem/invoiceItem.interface';
 
 export interface InvoiceAttributes {
   id?: number;
   invoiceId?: string;
   invoiceTitle?: string;
-  recieverName: string;
-  recieverEmail: string;
-  recieverPhone?: string;
-  recieverAddress?: string;
+  receiverName: string;
+  receiverEmail: string;
+  receiverPhone?: string;
+  receiverAddress?: string;
   additionInfo?: string;
   totalAmount: number;
   tax?: number;
@@ -18,8 +19,13 @@ export interface InvoiceAttributes {
   updatedAt?: Date;
 }
 
-export interface InvoiceInstance
-  extends SequelizeTypes.Instance<InvoiceAttributes>,
-    InvoiceAttributes {
-  // UserInstance methods for HasOne Profile
+export interface InvoiceInstance extends Sequelize.Instance<InvoiceAttributes>, InvoiceAttributes {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  dataValues: Record<string, any>;
+  invoiceItems: InvoiceItemInstance[];
+
+  getInvoiceItems: Sequelize.HasManyCreateAssociationMixin<
+    InvoiceItemAttributes,
+    InvoiceItemInstance
+  >;
 }

@@ -3,7 +3,6 @@
 // eslint-disable-next-line
 import * as SequelizeTypes from '@types/sequelize';
 
-import generateUniqueId from '../../../helpers/generateUniqueId';
 import { InvoiceItemInstance, InvoiceItemAttributes } from './invoiceItem.interface';
 
 export const invoiceItemFactory = (
@@ -11,14 +10,6 @@ export const invoiceItemFactory = (
   DataTypes: SequelizeTypes.DataTypes,
 ): SequelizeTypes.Model<InvoiceItemInstance, InvoiceItemAttributes> => {
   const attributes: SequelizeTypes.DefineModelAttributes<InvoiceItemAttributes> = {
-    invoiceItemId: {
-      type: DataTypes.STRING,
-      defaultValue: generateUniqueId(),
-      unique: true,
-    },
-    invoiceId: {
-      type: DataTypes.STRING,
-    },
     description: {
       type: DataTypes.STRING,
     },

@@ -5,12 +5,11 @@ import * as SequelizeTypes from '@types/sequelize';
 
 export interface InvoiceItemAttributes {
   id?: number;
-  invoiceItemId?: string;
   description?: string;
   rate: number;
   quantity: number;
   amount: number;
-  invoiceId: string;
+  invoiceId?: number;
   createdAt?: Date;
   updatedAt?: Date;
 }
