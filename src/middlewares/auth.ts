@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-ignore */
 import * as Express from 'express';
-import UserRepository from '../repositories/UserRepository';
+import { UserRepository } from '../repositories/UserRepository';
 import { AppResponse } from '../helpers/AppResponse';
 import { verifyUserToken, validatePasswordResetToken } from '../helpers/tokenHelpers';
 import { TokenData } from '../interfaces/TokenHelpers.interface';
@@ -30,7 +30,7 @@ const checkUserAuth = async (
       });
     }
 
-    res.locals.user = { ...decodedToken };
+    res.locals = { ...res.locals, user, decodedToken };
 
     return next();
   } catch (error) {

@@ -29,6 +29,7 @@
     "arrow-parens": "off",
     "max-lines": "error",
     "import/prefer-default-export": "off",
+    "import/no-cycle": "off",
     "no-eq-null": "error",
     "require-jsdoc": [
       "error",

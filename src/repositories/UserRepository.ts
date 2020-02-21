@@ -16,7 +16,7 @@ const { Op } = Sequelize;
 /**
  * UserRepository
  */
-class UserRepository extends Repository {
+export class UserRepository extends Repository {
   private static User: typeof models.User = models.User;
 
   private static Profile: typeof models.Profile = models.Profile;

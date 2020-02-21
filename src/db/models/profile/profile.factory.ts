@@ -13,19 +13,13 @@ export const profileFactory = (
     firstName: {
       type: DataTypes.STRING,
     },
-    middleName: {
-      type: DataTypes.STRING,
-    },
     lastName: {
       type: DataTypes.STRING,
     },
     gender: {
       type: DataTypes.STRING,
     },
-    image: {
-      type: DataTypes.STRING,
-    },
-    storeName: {
+    avatar: {
       type: DataTypes.STRING,
     },
     bio: {
