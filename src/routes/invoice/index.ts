@@ -11,6 +11,10 @@ import { validate } from '../auth/authValidations';
 // AsyncHandler
 import { asyncHandler } from '../../helpers/asyncHandler';
 
+// Middleware
+
+import { checkUserAuth, checkUserIsMerchant } from '../../middlewares/auth';
+
 const invoiceRouter = express.Router();
 
 /**
@@ -18,7 +22,12 @@ const invoiceRouter = express.Router();
  */
 invoiceRouter.post(
   '/',
-  [validate(InvoiceSchema.createInvoiceSchema), invoiceTotalValidator],
+  [
+    checkUserAuth,
+    checkUserIsMerchant,
+    validate(InvoiceSchema.createInvoiceSchema),
+    invoiceTotalValidator,
+  ],
   asyncHandler(InvoiceController.createInvoice),
 );
 

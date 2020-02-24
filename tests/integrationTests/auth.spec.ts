@@ -47,7 +47,7 @@ describe('Auth Endpoint Test Suite', () => {
     });
   });
 
-  describe('Password Endpoint Test Suite', () => {
+  describe('Password Reset Endpoint Test Suite', () => {
     const passwordResetEndpoint = '/api/v1/auth/reset-password';
 
     it('should return 400 when invalid data is sent', async () => {

@@ -1,7 +1,7 @@
 import * as chai from 'chai';
 import * as sinon from 'sinon';
 import * as httpMocks from 'node-mocks-http';
-import { checkUser } from '../../../src/middlewares/auth';
+import { checkUser, checkUserIsMerchant } from '../../../src/middlewares/auth';
 import UserRepository from '../../../src/repositories/UserRepository';
 import { AppResponse } from '../../../src/helpers/AppResponse';
 import * as tokenHelpers from '../../../src/helpers/tokenHelpers';
@@ -68,6 +68,38 @@ describe('auth middleware Test Suite', () => {
       expect(getByUniqueIdAndSecretKey.called).to.equal(true);
       expect(notFound.called).to.equal(true);
       expect(nextFn.called).to.equal(false);
+    });
+  });
+
+  describe('checkUserIsMerchant Test Suite', () => {
+    afterEach(() => {
+      sinon.restore();
+    });
+
+    const request = httpMocks.createRequest();
+
+    const response = httpMocks.createResponse();
+
+    it('should return unAuthorized response if user is not a merchant', () => {
+      response.locals.user = { accountType: 'Customer' };
+      const unAuthorized = sinon.fake();
+      const nextFn = sinon.fake();
+
+      sinon.replace(AppResponse, 'unAuthorized', unAuthorized);
+
+      checkUserIsMerchant(request, response, nextFn);
+
+      expect(unAuthorized.called).to.equal(true);
+      expect(nextFn.called).to.equal(false);
+    });
+
+    it('should call next', async () => {
+      response.locals.user = { accountType: 'Merchant' };
+      const nextFn = sinon.fake();
+
+      checkUserIsMerchant(request, response, nextFn);
+
+      expect(nextFn.called).to.equal(true);
     });
   });
 });

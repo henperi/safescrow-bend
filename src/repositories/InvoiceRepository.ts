@@ -37,7 +37,7 @@ class InvoiceRepository extends Repository {
       });
 
       const invoiceItems = await this.InvoiceItem.bulkCreate(
-        invoiceItemsData.map(item => ({ ...item, invoiceId: invoice.id as number })),
+        invoiceItemsData.map(item => ({ ...item, invoiceId: invoice.id })),
         { transaction: t },
       );
 
