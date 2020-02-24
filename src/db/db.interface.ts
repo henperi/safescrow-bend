@@ -14,6 +14,11 @@ import {
   TransactionInstance,
   TransactionAttributes,
 } from './models/transaction/transaction.interface';
+import {
+  InvoiceItemInstance,
+  InvoiceItemAttributes,
+} from './models/invoiceItem/invoiceItem.interface';
+import { InvoiceInstance, InvoiceAttributes } from './models/invoice/invoice.interface';
 
 export interface DbInterface {
   sequelize: SequelizeTypes.Sequelize;
@@ -24,4 +29,6 @@ export interface DbInterface {
   MainWallet: SequelizeTypes.Model<MainWalletInstance, MainWalletAttributes>;
   EscrowWallet: SequelizeTypes.Model<EscrowWalletInstance, EscrowWalletAttributes>;
   Transaction: SequelizeTypes.Model<TransactionInstance, TransactionAttributes>;
+  InvoiceItem: SequelizeTypes.Model<InvoiceItemInstance, InvoiceItemAttributes>;
+  Invoice: SequelizeTypes.Model<InvoiceInstance, InvoiceAttributes>;
 }

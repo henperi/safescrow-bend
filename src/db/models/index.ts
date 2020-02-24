@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
-import Sequelize from 'sequelize';
+import Sequelize, { Sequelize } from 'sequelize';
 import * as dotenv from 'dotenv';
 
 import { DbInterface } from '../db.interface';
@@ -10,6 +10,8 @@ import { addressFactory } from './address/address.factory';
 import { mainWalletFactory } from './mainWallet/mainWallet.factory';
 import { escrowWalletFactory } from './escrowWallet/escrowWallet.factory';
 import { transactionFactory } from './transaction/transaction.factory';
+import { invoiceFactory } from './invoice/invoice.factory';
+import { invoiceItemFactory } from './invoiceItem/invoiceItem.factory';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const config = require('./../config');
@@ -17,10 +19,10 @@ const config = require('./../config');
 dotenv.config();
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const sequelizeConfig = config[NODE_ENV];
+// eslint-disable-next-line import/no-mutable-exports
+let sequelize: Sequelize;
 
 export const createModels = (): DbInterface => {
-  let sequelize;
-
   if (sequelizeConfig.use_env_variable) {
     sequelize = new Sequelize(process.env[sequelizeConfig.use_env_variable], sequelizeConfig);
   } else {
@@ -38,6 +40,8 @@ export const createModels = (): DbInterface => {
     MainWallet: mainWalletFactory(sequelize, Sequelize),
     EscrowWallet: escrowWalletFactory(sequelize, Sequelize),
     Transaction: transactionFactory(sequelize, Sequelize),
+    Invoice: invoiceFactory(sequelize, Sequelize),
+    InvoiceItem: invoiceItemFactory(sequelize, Sequelize),
   };
 
   Object.keys(db).forEach((modelName: string) => {
@@ -52,3 +56,4 @@ export const createModels = (): DbInterface => {
 const models = createModels();
 
 export default models;
+export { sequelize };

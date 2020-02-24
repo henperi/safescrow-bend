@@ -85,4 +85,30 @@ const checkUser = async (
   return next();
 };
 
-export { checkUserAuth, checkUser };
+/**
+ * Method to check a User' is a merchant
+ * @param req express request
+ * @param res express response
+ * @param next express function
+ * @returns Promise<void>
+ */
+
+const checkUserIsMerchant = (
+  req: Express.Request,
+  res: Express.Response,
+  next: Express.NextFunction,
+): void => {
+  const {
+    user: { accountType },
+  } = res.locals;
+
+  if (accountType !== 'Merchant') {
+    return AppResponse.unAuthorized(res, {
+      message: 'You are not authorized to perform this operation',
+    });
+  }
+
+  return next();
+};
+
+export { checkUserAuth, checkUser, checkUserIsMerchant };

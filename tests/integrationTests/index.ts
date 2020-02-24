@@ -3,3 +3,4 @@ import './auth.spec';
 import './address.spec';
 import './wallets.spec';
 import './transaction.spec';
+import './invoice.spec';

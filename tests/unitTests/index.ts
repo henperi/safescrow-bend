@@ -4,4 +4,5 @@ import './helpers/tokenHelpers.spec';
 import './helpers/asyncHandler.spec';
 import './routes/auth/authValidations.spec';
 import './controllers/AuthController.spec';
+import './controllers/InvoiceController.spec';
 import './middlewares/auth.spec';
