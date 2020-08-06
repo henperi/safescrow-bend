@@ -38,7 +38,7 @@ Add the following fields to the newly created `.env` file
 
 - Step 4. Run `\q` to quit the psql terminal.
 
-- Step 5. Run `psql postgres -U safescrow_admin` to login back to psql as safescrow_admin.
+- Step 5. Run `psql postgres safescrow_admin` to login back to psql as safescrow_admin.
 
 - Step 6. Enter the password for the safescrow_admin, i.e `safescrow_password`.
 
@@ -56,3 +56,24 @@ Add this database url to your `.env` file with a key of `DEV_DB_URL`.
 i.e `DEV_DB_URL=postgres://safescrow_admin:safescrow_password@127.0.0.1:5432/safescrow_dev_db`
 
 ---
+
+## 4. Setup Africa's Talking Environment
+
+**Create an Africa's Talking Account to generate your sandbox API Key**
+Add the API to your `.env` file with a key of `AFRIKA_TALKING_API_KEY`.
+
+i.e `AFRIKA_TALKING_API_KEY=yourAfricasTalkingApi`
+
+Add your Africa's talking username to your `.env` file with a key of `AFRIKA_TALKING_USERNAME`.
+
+i.e `AFRIKA_TALKING_USERNAME=yourUserName`
+
+---
+
+## 5. Start the server
+
+**Having following the above instructions you can start the server**
+
+- Development Server: Run `npm run start:dev`
+
+\*\*Everything working fine, you'd see a `6 Aug 18:58:45 - connected on port 8025` message in your prompt.
