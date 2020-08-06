@@ -30,7 +30,7 @@ Add the following fields to the newly created `.env` file
 
 **Ensure you have Postgres properly installed on your local machine and then follow the steps listed below.**
 
-- Step 1. Run `psql postgres --u postgres` to login as the defaul psql user.
+- Step 1. Run `psql postgres postgres` to login as the defaul psql user.
 
 - Step 2. Run `CREATE ROLE safescrow_admin WITH LOGIN PASSWORD 'safescrow_password';` to create a new psql user.
 
