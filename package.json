@@ -7,11 +7,11 @@
     "pretest": "npm run migrate:reset && npm run seed:all",
     "test": "nyc --reporter=html --reporter=text mocha --require ts-node/register tests/index.spec.ts",
     "coverage": "nyc npm run test",
-    "build": "rm -rf ./build/ && tsc",
+    "build": "tsc",
     "migrate:reset": "npm run build && node build/db/migrate/reset",
     "migrate:drop": "npm run build && node build/db/migrate/drop",
     "migrate": "npm run build && node build/db/migrate",
-    "seed:all": "NODE_ENV=development ts-node src/db/seeders",
+    "seed:all": "SET NODE_ENV=development ts-node src/db/seeders",
     "start:dev": "nodemon --config \"./util/nodemon.json\"/",
     "start": "npm run build && node build"
   },

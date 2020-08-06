@@ -10,6 +10,11 @@ This is the server/backend that powers the Safescrow client applications. It's c
 
 To Setup the development environment on your local machine a few things are required. Please do well to follow the instructions below to in order get started and have everything working.
 
+**If using Windows, update the following key pairs in the `package.json` file**
+
+- `"build": "tsc"`
+- `"seed:all": "SET NODE_ENV=development ts-node src/db/seeders"`
+
 ## 1. Create a `.env` file in the root directory
 
 Add the following fields to the newly created `.env` file
@@ -70,10 +75,22 @@ i.e `AFRIKA_TALKING_USERNAME=yourUserName`
 
 ---
 
-## 5. Start the server
+## 5. Setup Send Grid Environment
+
+**Create a Sendgrid Account to get your API Key**
+Add the API to your `.env` file with a key of `SENDGRID_API_KEY`.
+
+i.e `SENDGRID_API_KEY=yourSendGridApi`
+
+---
+
+## 6. Start the server
 
 **Having following the above instructions you can start the server**
 
+**Not starting the server for the first time?, skip to 2nd Bullet Point**
+
+- Seed Database: Run `npm run pretest`
 - Development Server: Run `npm run start:dev`
 
-\*\*Everything working fine, you'd see a `6 Aug 18:58:45 - connected on port 8025` message in your prompt.
+**Everything working fine, you'd see a `6 Aug 18:58:45 - connected on port 8025` message in your prompt.**
