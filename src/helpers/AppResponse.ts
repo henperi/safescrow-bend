@@ -98,7 +98,7 @@ class AppResponse {
   }
 
   /**
-   * NotFound Method
+   * Forbidden Method
    * @param res Res
    *
    * @returns Restful API Response
@@ -116,7 +116,7 @@ class AppResponse {
   }
 
   /**
-   * NotFound Method
+   * Conflicting Method
    * @param res Res
    *
    * @returns Restful API Response
@@ -134,7 +134,7 @@ class AppResponse {
   }
 
   /**
-   * NotFound Method
+   * Server Error Method
    * @param res Res
    *
    * @returns Restful API Response

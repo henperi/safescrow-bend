@@ -10,6 +10,11 @@ This is the server/backend that powers the Safescrow client applications. It's c
 
 To Setup the development environment on your local machine a few things are required. Please do well to follow the instructions below to in order get started and have everything working.
 
+**If using Windows, update the following key pairs in the `package.json` file**
+
+- `"build": "tsc"`
+- `"seed:all": "SET NODE_ENV=development ts-node src/db/seeders"`
+
 ## 1. Create a `.env` file in the root directory
 
 Add the following fields to the newly created `.env` file
@@ -30,7 +35,7 @@ Add the following fields to the newly created `.env` file
 
 **Ensure you have Postgres properly installed on your local machine and then follow the steps listed below.**
 
-- Step 1. Run `psql postgres --u postgres` to login as the defaul psql user.
+- Step 1. Run `psql postgres postgres` to login as the defaul psql user.
 
 - Step 2. Run `CREATE ROLE safescrow_admin WITH LOGIN PASSWORD 'safescrow_password';` to create a new psql user.
 
@@ -38,7 +43,7 @@ Add the following fields to the newly created `.env` file
 
 - Step 4. Run `\q` to quit the psql terminal.
 
-- Step 5. Run `psql postgres -U safescrow_admin` to login back to psql as safescrow_admin.
+- Step 5. Run `psql postgres safescrow_admin` to login back to psql as safescrow_admin.
 
 - Step 6. Enter the password for the safescrow_admin, i.e `safescrow_password`.
 
@@ -56,3 +61,36 @@ Add this database url to your `.env` file with a key of `DEV_DB_URL`.
 i.e `DEV_DB_URL=postgres://safescrow_admin:safescrow_password@127.0.0.1:5432/safescrow_dev_db`
 
 ---
+
+## 4. Setup Africa's Talking Environment
+
+**Create an Africa's Talking Account to generate your sandbox API Key**
+Add the API to your `.env` file with a key of `AFRIKA_TALKING_API_KEY`.
+
+i.e `AFRIKA_TALKING_API_KEY=yourAfricasTalkingApi`
+
+Add your Africa's talking username to your `.env` file with a key of `AFRIKA_TALKING_USERNAME`.
+
+i.e `AFRIKA_TALKING_USERNAME=yourUserName`
+
+---
+
+## 5. Setup Send Grid Environment
+
+**Create a Sendgrid Account to get your API Key**
+Add the API to your `.env` file with a key of `SENDGRID_API_KEY`.
+
+i.e `SENDGRID_API_KEY=yourSendGridApi`
+
+---
+
+## 6. Start the server
+
+**Having following the above instructions you can start the server**
+
+**Not starting the server for the first time?, skip to 2nd Bullet Point**
+
+- Seed Database: Run `npm run pretest`
+- Development Server: Run `npm run start:dev`
+
+**Everything working fine, you'd see a `6 Aug 18:58:45 - connected on port 8025` message in your prompt.**
